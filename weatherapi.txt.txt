@@ -1,0 +1,9 @@
+
+https://api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
+
+API key = ecd37ad9f316d86d30909872327053ae
+
+
+
+
+https://api.openweathermap.org/data/2.5/weather?q=Pune&appid=ecd37ad9f316d86d30909872327053ae

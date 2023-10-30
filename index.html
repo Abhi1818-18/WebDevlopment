@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="card">
+      <div class="search">
+        <input type="text" id="cityInput" placeholder="Enter City Name" spellcheck="false" />
+        <button id="searchBtn"><img src="images/search.png" /></button>
+      </div>
+      <div class="weather">
+        <img src="images/rain.png" class="weather-icon" />
+        <h1 class="temp">22°C</h1>
+        <h2 class="city">New York</h2>
+        <div class="details">
+          <div class="col">
+            <img src="images/humidity.png" />
+            <div class="humidity">
+              <p class="humidity-value">50%</p>
+              <p>humidity</p>
+            </div>
+          </div>
+          <div class="col">
+            <img src="images/wind.png" />
+            <div class="wind">
+              <p class="wind-value">15 km/h</p>
+              <p>wind speed</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      const apiKey = "ecd37ad9f316d86d30909872327053ae";
+      const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+
+      const cityInput = document.getElementById("cityInput");
+      const searchBtn = document.getElementById("searchBtn");
+      const cityName = document.querySelector(".city");
+      const temperature = document.querySelector(".temp");
+      const humidityValue = document.querySelector(".humidity-value");
+      const windValue = document.querySelector(".wind-value");
+
+      async function checkWeather(city) {
+        try {
+          const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
+          if (response.ok) {
+            const data = await response.json();
+            cityName.innerHTML = data.name;
+            temperature.innerHTML = Math.round(data.main.temp) + "°C";
+            humidityValue.innerHTML = data.main.humidity + "%";
+            windValue.innerHTML = data.wind.speed + " km/h";
+          } else {
+            cityName.innerHTML = "City not found";
+            temperature.innerHTML = "";
+            humidityValue.innerHTML = "";
+            windValue.innerHTML = "";
+          }
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      }
+
+      searchBtn.addEventListener("click", () => {
+        checkWeather(cityInput.value);
+      });
+
+      // Trigger the initial weather check with a default city (e.g., New York)
+      checkWeather("New York");
+    </script>
+  </body>
+</html>
